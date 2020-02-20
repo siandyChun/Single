@@ -14,6 +14,8 @@ export default class extends React.Component {
 
     const place = await Location.reverseGeocodeAsync({latitude, longitude});
     const city = place[0].city;
+    
+    //시티정보 콘솔 확인
     console.log(city);
   
     this.setState({
@@ -34,11 +36,10 @@ export default class extends React.Component {
     
       //getCity실행
       this.getCity(latitude, longitude);
-  
+      
+      //위치정보 콘솔 확인
       console.log(latitude, longitude);
-
-      this.setState({isLoading: false});
-        
+              
     } catch(error) {
       //에러메세지
       Alert.alert("웁스~에러났어요")
@@ -51,7 +52,7 @@ export default class extends React.Component {
 
   render() {
     const {isLoading, city} = this.state;
-    return isLoading ? <Loading /> : <MyLocation />;
+    return isLoading ? <Loading /> : <MyLocation city={city}/>;
   }
   
   }
