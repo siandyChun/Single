@@ -1,25 +1,57 @@
 import React from 'react';
 import Loading from './Loading';
-//import MapView from 'react-native-maps';
-//import { StyleSheet, Text, View, Dimensions } from 'react-native';
-//import { render } from 'react-dom';
+import * as Location from 'expo-location';
+import { Alert } from 'react-native';
+import MyLocation from './Mylocation';
 
 export default class extends React.Component {
   state = {
     isLoading : true
   };
 
+  //시티정보 가져오기
+  getCity = async(latitude, longitude) => {
+
+    const place = await Location.reverseGeocodeAsync({latitude, longitude});
+    const city = place[0].city;
+    console.log(city);
+  
+    this.setState({
+      isLoading: false,
+      city
+    })
+
+  }
+
+  //경도, 위도 위치 정보 가져오기
+  getLocation = async() => {
+    try{
+      //로케이션 기기 퍼미션
+      await Location.requestPermissionsAsync();
+
+      //위치정보 가져오기
+      const {coords: {latitude, longitude}} = await Location.getCurrentPositionAsync();
+    
+      //getCity실행
+      this.getCity(latitude, longitude);
+  
+      console.log(latitude, longitude);
+
+      this.setState({isLoading: false});
+        
+    } catch(error) {
+      //에러메세지
+      Alert.alert("웁스~에러났어요")
+    }
+  }
+
+  componentDidMount() {
+    this.getLocation();
+  }
+
   render() {
-    const {isLoading} = this.state;
-    return isLoading ? <Loading /> : null;
+    const {isLoading, city} = this.state;
+    return isLoading ? <Loading /> : <MyLocation />;
   }
   
-  /*
-  return (
-    <View style={styles.container}>
-      <MapView style={styles.mapStyle} />
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
-  */
-}
+  }

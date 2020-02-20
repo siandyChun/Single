@@ -2,8 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { LinearGradient} from 'expo-linear-gradient';
 import * as Font from 'expo-font';
-import { AppLoading } from 'expo';
-import { render } from 'react-dom';
 
 const fetchFonts =() => {
     return Font.loadAsync({
