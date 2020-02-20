@@ -24,11 +24,12 @@ const styles = StyleSheet.create({
     },
 
     mapStyle: {
-        flex: 5,
+        flex: 7,
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height,
     },
     textLocation: {
         color: "white",
+        fontSize: 15,
     }
 })
